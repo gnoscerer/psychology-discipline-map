@@ -82,7 +82,6 @@ def header(active=None):
     for cat in cats:
         cid = cat["id"]
         parts.append(f'<a href="index.html#{cid}">{esc(cat["name"])}</a>')
-    parts.append('<a href="profile.html">我的记录</a>')
     parts.append('<a href="admin.html">行为看板</a>')
     parts.append('</nav></div></header>\n')
     return "".join(parts)

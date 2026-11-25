@@ -1,6 +1,6 @@
 const TYPES = new Set([
   "page_view", "branch_view", "search", "filter", "card_click",
-  "pager_click", "engagement", "scroll", "consent"
+  "pager_click", "engagement", "scroll"
 ]);
 
 const CATEGORIES = new Set(["basic", "applied", "emerging", "hub"]);
@@ -40,16 +40,15 @@ export async function onRequestPost({ request, env }) {
   const now = new Date().toISOString();
 
   try {
-    const user = await env.DB.prepare("SELECT consent FROM users WHERE id = ?").bind(userId).first();
-    if (!user || user.consent !== 1) {
-      return json({ ok: false, error: "no_consent" }, 202);
-    }
+    await env.DB.prepare(
+      `INSERT INTO users (id, display_name, email, consent, created_at, last_seen_at)
+       VALUES (?, '', '', 1, ?, ?)
+       ON CONFLICT(id) DO UPDATE SET last_seen_at = excluded.last_seen_at`
+    ).bind(userId, now, now).run();
 
     await env.DB.prepare(
       "INSERT OR IGNORE INTO sessions (id, user_id, started_at) VALUES (?, ?, ?)"
     ).bind(sessionId, userId, now).run();
-
-    await env.DB.prepare("UPDATE users SET last_seen_at = ? WHERE id = ?").bind(now, userId).run();
 
     let meta = "";
     if (payload.meta && typeof payload.meta === "object" && !Array.isArray(payload.meta)) {
