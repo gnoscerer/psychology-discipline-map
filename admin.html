@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>行为分析看板｜心理学学科地图</title>
+<meta name="description" content="心理学学科地图的匿名行为数据管理后台，需令牌访问。">
+<meta name="author" content="gnoscerer">
+<meta name="copyright" content="© 2026 gnoscerer. All rights reserved.">
+<link rel="stylesheet" href="assets/style.css">
+<link rel="stylesheet" href="assets/behavior.css">
+<script src="assets/behavior.js" defer></script>
+<script src="assets/admin.js" defer></script>
+</head>
+<body data-cat="hub">
+<a class="skip-link" href="#main">跳到主要内容</a>
+<header class="site-header"><div class="wrap header-inner">
+<a class="brand" href="index.html"><span class="brand-mark" aria-hidden="true">心</span><span>心理学学科地图</span></a>
+<nav class="nav" aria-label="主导航">
+<a href="index.html#basic">基础心理学</a>
+<a href="index.html#applied">应用心理学</a>
+<a href="index.html#emerging">交叉与新兴方向</a>
+<a href="profile.html">我的记录</a>
+<a href="admin.html" aria-current="page">行为看板</a>
+</nav></div></header>
+<main id="main">
+<div class="hero"><div class="wrap hero-inner"><div>
+<p class="eyebrow">ADMIN · 匿名行为分析</p>
+<h1>行为分析看板</h1>
+<p class="hero-en">Behavior analytics dashboard</p>
+<p class="tagline">仅统计已同意的匿名事件，不含姓名与位置</p>
+<p class="lead">这里汇总总览页和各分支页面的访问、搜索、筛选与点击情况，帮助你判断哪些内容更受关注、哪些入口需要改进。令牌只保存在当前浏览器会话中。</p>
+</div></div></div>
+
+<section id="login-section" aria-labelledby="login-title"><div class="wrap">
+<div class="section-head"><h2 id="login-title">管理令牌</h2></div>
+<div class="login-card">
+<div class="form-row"><label for="admin-token">访问令牌</label><input id="admin-token" type="password" autocomplete="off" spellcheck="false"></div>
+<div class="form-actions"><button class="btn btn-primary" type="button" id="login-button">进入看板</button></div>
+<p class="message" id="login-message" role="status" aria-live="polite"></p>
+</div>
+</div></section>
+
+<section id="dashboard-section" aria-labelledby="dashboard-title" hidden><div class="wrap">
+<div class="section-head"><h2 id="dashboard-title">数据概览</h2>
+<div class="form-actions"><button class="btn btn-primary" type="button" id="refresh-button">刷新</button><button class="btn btn-ghost" type="button" id="logout-button">退出</button></div>
+</div>
+<div class="dash-grid">
+<div class="stat-card"><strong id="stat-users">0</strong><span>匿名访客</span></div>
+<div class="stat-card"><strong id="stat-consented">0</strong><span>已同意统计</span></div>
+<div class="stat-card"><strong id="stat-events">0</strong><span>累计事件</span></div>
+<div class="stat-card"><strong id="stat-today">0</strong><span>今日事件</span></div>
+<div class="stat-card"><strong id="stat-week">0</strong><span>近 7 日事件</span></div>
+</div>
+<p class="message" id="dash-message" role="status" aria-live="polite"></p>
+
+<div class="split">
+<div class="panel"><h3>热门分支</h3><div class="bar-list" id="bar-branches"></div></div>
+<div class="panel"><h3>热门页面</h3><div class="bar-list" id="bar-paths"></div></div>
+<div class="panel"><h3>热门搜索词</h3><div class="bar-list" id="bar-searches"></div></div>
+<div class="panel"><h3>事件类型分布</h3><div class="bar-list" id="bar-types"></div></div>
+</div>
+
+<div class="section-head pager-head"><h3>最近事件</h3></div>
+<div class="table-wrapper" tabindex="0" role="region" aria-labelledby="recent-caption">
+<table><caption id="recent-caption">最近 20 条匿名行为事件</caption>
+<thead><tr><th scope="col">时间</th><th scope="col">类型</th><th scope="col">访客</th><th scope="col">页面 / 分支</th></tr></thead>
+<tbody id="recent-body"><tr><td colspan="4">尚未加载</td></tr></tbody>
+</table>
+</div>
+
+<div class="section-head pager-head"><h3>事件明细与筛选</h3></div>
+<form id="event-filter" class="search-bar">
+<div class="field"><label for="filter-type">事件类型</label><select id="filter-type" name="type"><option value="">全部</option><option value="page_view">page_view</option><option value="branch_view">branch_view</option><option value="search">search</option><option value="filter">filter</option><option value="card_click">card_click</option><option value="pager_click">pager_click</option><option value="engagement">engagement</option><option value="scroll">scroll</option><option value="consent">consent</option></select></div>
+<div class="field"><label for="filter-from">开始日期</label><input id="filter-from" name="from" type="date"></div>
+<div class="field"><label for="filter-to">结束日期</label><input id="filter-to" name="to" type="date"></div>
+<div class="field"><label for="filter-limit">条数</label><input id="filter-limit" name="limit" type="number" min="1" max="200" value="50"></div>
+<div class="field category-filter"><span class="visually-hidden">查询操作</span><div class="form-actions"><button class="btn btn-primary" type="submit">查询</button><button class="btn btn-ghost" type="button" id="export-csv">导出 CSV</button></div></div>
+</form>
+<p class="message" id="filter-message"></p>
+<div class="table-wrapper" tabindex="0" role="region" aria-labelledby="detail-caption">
+<table><caption id="detail-caption">符合筛选条件的事件明细</caption>
+<thead><tr><th scope="col">时间</th><th scope="col">类型</th><th scope="col">访客</th><th scope="col">页面</th><th scope="col">搜索词 / 分支</th></tr></thead>
+<tbody id="detail-body"><tr><td colspan="5">尚未加载</td></tr></tbody>
+</table>
+</div>
+</div></section>
+</main>
+<footer class="footer"><div class="wrap footer-inner">
+<div><div>© 2026 gnoscerer. 保留所有权利。</div><div>联系：<a href="mailto:gnoscerer@gmail.com">gnoscerer@gmail.com</a></div></div>
+<a href="index.html">返回总览 ↑</a>
+</div></footer>
+</body>
+</html>

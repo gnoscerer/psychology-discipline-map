@@ -1,0 +1,265 @@
+.consent-bar {
+  position: fixed;
+  inset-inline: 0;
+  inset-block-end: 0;
+  z-index: 30;
+  max-block-size: 14vh;
+  overflow: auto;
+  border-block-start: 1px solid var(--line);
+  background: rgba(255, 255, 255, 0.96);
+  box-shadow: 0 -8px 24px rgba(24, 35, 56, 0.08);
+}
+
+.consent-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+  padding-block: 0.55rem;
+}
+
+.consent-inner p {
+  margin: 0;
+  color: var(--ink-soft);
+  font-size: 0.85rem;
+  line-height: 1.5;
+}
+
+.consent-actions {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.btn {
+  min-block-size: 42px;
+  padding: 0.5rem 0.95rem;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: #fff;
+  color: var(--ink-soft);
+  font: inherit;
+  font-size: 0.88rem;
+  cursor: pointer;
+}
+
+.btn-primary {
+  border-color: var(--accent);
+  background: var(--accent);
+  color: #fff;
+  font-weight: 650;
+}
+
+.btn-ghost:hover {
+  border-color: var(--accent-line);
+  color: var(--accent);
+}
+
+.dash-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+  gap: 0.85rem;
+  margin-block-end: 1.5rem;
+}
+
+.stat-card {
+  padding: 1rem 1.15rem;
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  background: var(--surface);
+}
+
+.stat-card strong {
+  display: block;
+  font-size: 1.7rem;
+  line-height: 1.2;
+  color: var(--accent);
+}
+
+.stat-card span {
+  color: var(--muted);
+  font-size: 0.82rem;
+}
+
+.bar-list {
+  display: grid;
+  gap: 0.7rem;
+}
+
+.bar-row {
+  display: grid;
+  gap: 0.3rem;
+}
+
+.bar-row .bar-label {
+  display: flex;
+  justify-content: space-between;
+  gap: 0.75rem;
+  font-size: 0.86rem;
+  color: var(--ink-soft);
+}
+
+.bar-track {
+  block-size: 8px;
+  border-radius: 999px;
+  background: var(--surface-2);
+  overflow: hidden;
+}
+
+.bar-fill {
+  block-size: 100%;
+  border-radius: inherit;
+  background: var(--accent);
+}
+
+.table-wrapper {
+  overflow: auto;
+  max-inline-size: 100%;
+  max-block-size: min(520px, 75vh);
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  background: var(--surface);
+  container-type: inline-size;
+}
+
+.table-wrapper table {
+  inline-size: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  font-size: 0.88rem;
+}
+
+.table-wrapper caption {
+  padding: 0.8rem 1rem;
+  color: var(--muted);
+  text-align: start;
+  font-size: 0.86rem;
+}
+
+.table-wrapper th,
+.table-wrapper td {
+  padding: 0.65rem 0.9rem;
+  border-block-end: 1px solid var(--line);
+  text-align: start;
+  white-space: nowrap;
+}
+
+.table-wrapper thead th {
+  position: sticky;
+  inset-block-start: 0;
+  z-index: 2;
+  background: var(--surface-2);
+  color: var(--ink);
+}
+
+.table-wrapper tbody th {
+  position: sticky;
+  inset-inline-start: 0;
+  z-index: 1;
+  background: var(--surface);
+  color: var(--ink);
+}
+
+@container (width < 620px) {
+  .table-wrapper table,
+  .table-wrapper tbody,
+  .table-wrapper tr,
+  .table-wrapper th,
+  .table-wrapper td {
+    display: block;
+  }
+
+  .table-wrapper thead {
+    display: none;
+  }
+
+  .table-wrapper tr {
+    padding-block: 0.5rem;
+    border-block-end: 1px solid var(--line);
+  }
+
+  .table-wrapper tbody th {
+    position: static;
+    border: 0;
+    font-weight: 700;
+  }
+
+  .table-wrapper td {
+    border: 0;
+    white-space: normal;
+  }
+
+  .table-wrapper td::before {
+    content: attr(data-label) ": ";
+    color: var(--muted);
+  }
+}
+
+.login-card {
+  max-inline-size: 460px;
+  padding: 1.4rem;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--surface);
+  box-shadow: var(--shadow);
+}
+
+.form-row {
+  display: grid;
+  gap: 0.35rem;
+  margin-block-end: 0.9rem;
+}
+
+.form-row label {
+  font-size: 0.88rem;
+  font-weight: 650;
+}
+
+.form-row input,
+.field select {
+  min-block-size: 46px;
+  padding: 0.55rem 0.8rem;
+  border: 1px solid #94a3b8;
+  border-radius: 10px;
+  background: #fff;
+  color: var(--ink);
+  font: inherit;
+  font-size: max(1rem, 1em);
+}
+
+.muted {
+  color: var(--muted);
+  font-size: 0.88rem;
+}
+
+.form-actions {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  margin-block-start: 1rem;
+}
+
+.message {
+  min-block-size: 1.5em;
+  margin-block: 0.6rem;
+  color: var(--muted);
+  font-size: 0.88rem;
+}
+
+.message.error {
+  color: #b42318;
+}
+
+dialog {
+  max-inline-size: min(440px, calc(100% - 2rem));
+  padding: 1.4rem;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--surface);
+  color: var(--ink);
+}
+
+dialog::backdrop {
+  background: rgba(24, 35, 56, 0.45);
+}

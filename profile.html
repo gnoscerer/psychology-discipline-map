@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>我的行为记录｜心理学学科地图</title>
+<meta name="description" content="查看与管理本站记录的个人匿名行为数据，支持导出与删除。">
+<meta name="author" content="gnoscerer">
+<meta name="copyright" content="© 2026 gnoscerer. All rights reserved.">
+<link rel="stylesheet" href="assets/style.css">
+<link rel="stylesheet" href="assets/behavior.css">
+<script src="assets/behavior.js" defer></script>
+<script src="assets/profile.js" defer></script>
+</head>
+<body data-cat="hub">
+<a class="skip-link" href="#main">跳到主要内容</a>
+<header class="site-header"><div class="wrap header-inner">
+<a class="brand" href="index.html"><span class="brand-mark" aria-hidden="true">心</span><span>心理学学科地图</span></a>
+<nav class="nav" aria-label="主导航">
+<a href="index.html#basic">基础心理学</a>
+<a href="index.html#applied">应用心理学</a>
+<a href="index.html#emerging">交叉与新兴方向</a>
+<a href="profile.html" aria-current="page">我的记录</a>
+<a href="admin.html">行为看板</a>
+</nav></div></header>
+<main id="main">
+<div class="hero"><div class="wrap hero-inner"><div>
+<p class="eyebrow">PRIVACY · 数据权利</p>
+<h1>我的行为记录</h1>
+<p class="hero-en">Your behavior archive</p>
+<p class="tagline">你可以查看、更正、导出或删除自己的记录</p>
+<p class="lead">本站使用一个只保存在你浏览器里的匿名标识来关联行为事件，不需要注册账号。只有你主动同意后才会开始记录；关闭同意即停止新增记录。昵称与邮箱均为可选，不会用于营销。</p>
+</div></div></div>
+
+<section aria-labelledby="settings-title"><div class="wrap">
+<div class="section-head"><h2 id="settings-title">偏好设置</h2><p>修改后立即生效</p></div>
+<div class="panel">
+<form id="profile-form">
+<div class="form-row"><label for="display-name">昵称（可选）</label><input id="display-name" name="displayName" maxlength="40" autocomplete="nickname"></div>
+<div class="form-row"><label for="email">邮箱（可选，仅用于你自己识别记录）</label><input id="email" name="email" type="email" maxlength="120" autocomplete="email"></div>
+<div class="form-row"><label for="consent-check"><input id="consent-check" name="consent" type="checkbox"> 同意本站记录匿名行为数据（页面浏览、搜索词、点击与滚动深度）</label></div>
+<div class="form-actions">
+<button class="btn btn-primary" type="submit">保存设置</button>
+<button class="btn btn-ghost" type="button" id="export-json">导出 JSON</button>
+<button class="btn btn-ghost" type="button" id="delete-data">删除我的全部数据</button>
+</div>
+</form>
+<p class="message" id="profile-message" role="status" aria-live="polite"></p>
+</div>
+</div></section>
+
+<section aria-labelledby="events-title"><div class="wrap">
+<div class="section-head"><h2 id="events-title">最近 200 条行为记录</h2><p>按时间倒序</p></div>
+<div class="table-wrapper" tabindex="0" role="region" aria-labelledby="events-caption">
+<table>
+<caption id="events-caption">本站记录的匿名行为事件</caption>
+<thead><tr><th scope="col">时间</th><th scope="col">类型</th><th scope="col">页面</th><th scope="col">搜索词 / 分支</th></tr></thead>
+<tbody id="events-body"><tr><td colspan="4">正在读取…</td></tr></tbody>
+</table>
+</div>
+</div></section>
+</main>
+<footer class="footer"><div class="wrap footer-inner">
+<div><div>© 2026 gnoscerer. 保留所有权利。</div><div>联系：<a href="mailto:gnoscerer@gmail.com">gnoscerer@gmail.com</a></div></div>
+<a href="index.html">返回总览 ↑</a>
+</div></footer>
+<dialog id="delete-dialog">
+<h3>确认删除全部数据？</h3>
+<p>这会永久删除你的行为事件、会话与偏好设置，且无法恢复。此操作不会清除浏览器本地的匿名标识。</p>
+<div class="form-actions">
+<button class="btn btn-ghost" type="button" id="delete-cancel">取消</button>
+<button class="btn btn-primary" type="button" id="delete-confirm">确认删除</button>
+</div>
+</dialog>
+</body>
+</html>

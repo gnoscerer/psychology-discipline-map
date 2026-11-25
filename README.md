@@ -7,6 +7,8 @@
 ## 线上地址
 
 - Cloudflare Pages：https://psychology-discipline-map.pages.dev/
+- 我的行为记录：https://psychology-discipline-map.pages.dev/profile.html
+- 行为分析看板：https://psychology-discipline-map.pages.dev/admin.html
 - GitHub：https://github.com/gnoscerer/psychology-discipline-map
 
 ## 本地预览
@@ -33,6 +35,25 @@ python build.py
 ```
 
 页面样式在 `assets/style.css`，首页搜索与筛选逻辑在 `assets/app.js`。`build.py` 会覆盖所有 HTML，请不要直接编辑生成后的 HTML。
+
+## 用户行为管理
+
+本站使用 Cloudflare D1 + Pages Functions 实现匿名行为管理，不加载任何第三方统计脚本：
+
+- 默认不采集。访客在同意横幅中选择「接受统计」后才开始记录；选择「仅必要」则完全不写入。
+- 匿名标识保存在浏览器本地，不收集姓名、位置或跨站信息。
+- 记录事件类型：`page_view`、`branch_view`、`search`、`filter`、`card_click`、`pager_click`、`scroll`、`engagement`、`consent`。
+- `profile.html`：访客可查看近 200 条记录、修改昵称/邮箱、导出 JSON、永久删除自己的全部数据。
+- `admin.html`：管理看板，需输入访问令牌；展示访客数、事件趋势、热门分支/页面/搜索词、事件明细筛选与 CSV 导出。
+- 管理令牌保存在站点目录外的 `../.psych-admin-token`，并通过 Cloudflare Pages secret `ADMIN_TOKEN` 注入，不进入仓库或前端代码。
+
+API 端点：
+
+- `POST /api/event`：上报匿名事件（需已同意）
+- `GET /api/profile?userId=...`、`POST /api/profile`、`DELETE /api/profile?userId=...`：个人记录读写与删除
+- `GET /api/admin/summary`、`/api/admin/events`、`/api/admin/users`：管理看板数据（需 `x-admin-token` 请求头）
+
+数据库建表脚本在 `schema.sql`。建议按需要定期清理超过 180 天的事件数据。
 
 ## 部署
 

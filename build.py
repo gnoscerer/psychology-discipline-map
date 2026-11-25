@@ -50,7 +50,12 @@ ART = """<svg class="hero-art" viewBox="0 0 320 260" role="img" aria-label="抽�
   <circle class="node" cx="160" cy="130" r="10"/>
 </svg>"""
 
-CSS_LINK = '<link rel="stylesheet" href="assets/style.css">\n<script src="assets/app.js" defer></script>'
+CSS_LINK = (
+    '<link rel="stylesheet" href="assets/style.css">\n'
+    '<link rel="stylesheet" href="assets/behavior.css">\n'
+    '<script src="assets/app.js" defer></script>\n'
+    '<script src="assets/behavior.js" defer></script>'
+)
 
 
 def head(title, description, cat):
@@ -77,6 +82,8 @@ def header(active=None):
     for cat in cats:
         cid = cat["id"]
         parts.append(f'<a href="index.html#{cid}">{esc(cat["name"])}</a>')
+    parts.append('<a href="profile.html">我的记录</a>')
+    parts.append('<a href="admin.html">行为看板</a>')
     parts.append('</nav></div></header>\n')
     return "".join(parts)
 

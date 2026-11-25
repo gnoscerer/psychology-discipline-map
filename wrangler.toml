@@ -1,0 +1,8 @@
+name = "psychology-discipline-map"
+compatibility_date = "2026-11-25"
+pages_build_output_dir = "."
+
+[[d1_databases]]
+binding = "DB"
+database_name = "psychology-behavior"
+database_id = "79bc827f-4895-437d-8147-fff0251df7fc"
