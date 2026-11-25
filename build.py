@@ -95,7 +95,7 @@ def branch_card(item, show_badge=True):
     thumb = (
         f'<img class="card-thumb" src="{esc(src)}" '
         f'alt="{esc(item.get("image_alt", item["name"]))}" '
-        'loading="lazy" decoding="async" width="1536" height="1024">'
+        'loading="lazy" decoding="async" width="1280" height="853">'
     ) if src else ""
     search = " ".join([
         item["name"], item["en"], item["tagline"], item["intro"],
@@ -225,7 +225,7 @@ def build_branch(item):
         hero_visual = (
             '<figure class="hero-figure">'
             f'<img src="{esc(src)}" alt="{esc(item["image_alt"])}" '
-            'loading="eager" decoding="async" width="1536" height="1024">'
+            'loading="eager" fetchpriority="high" decoding="async" width="1280" height="853">'
             f'<figcaption>{esc(item["image_caption"])}</figcaption>'
             '</figure>'
         )
