@@ -2,6 +2,11 @@
 
 一个零依赖的中文静态站点：1 个总览首页 + 41 个心理学分支独立页面，按「基础心理学 / 应用心理学 / 交叉与新兴方向」三大类组织。
 
+## 线上地址
+
+- Cloudflare Pages：https://psychology-discipline-map.pages.dev/
+- GitHub：https://github.com/gnoscerer/psychology-discipline-map
+
 ## 本地预览
 
 直接打开 `index.html`，或启动本地服务器：
