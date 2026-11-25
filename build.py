@@ -11,6 +11,16 @@ def esc(value):
     return html.escape(str(value), quote=True)
 
 
+def image_for(item_id):
+    folder = ROOT / "assets" / "images" / item_id
+    if folder.is_dir():
+        for pattern in ("*.webp", "*.png", "*.jpg", "*.jpeg"):
+            found = sorted(folder.glob(pattern))
+            if found:
+                return "assets/images/" + item_id + "/" + found[0].name
+    return None
+
+
 cats = [json.loads((ROOT / "data" / f"{name}.json").read_text(encoding="utf-8"))
         for name in ("basic", "applied", "emerging")]
 
@@ -81,6 +91,12 @@ def footer():
 
 def branch_card(item, show_badge=True):
     badge = f'<span class="badge">{esc(item["catname"])}</span>' if show_badge else ""
+    src = image_for(item["id"])
+    thumb = (
+        f'<img class="card-thumb" src="{esc(src)}" '
+        f'alt="{esc(item.get("image_alt", item["name"]))}" '
+        'loading="lazy" decoding="async" width="1536" height="1024">'
+    ) if src else ""
     search = " ".join([
         item["name"], item["en"], item["tagline"], item["intro"],
         " ".join(item["concepts"]), item["catname"],
@@ -88,6 +104,7 @@ def branch_card(item, show_badge=True):
     return (
         f'<article class="card branch-card" data-branch data-category="{esc(item["cat"])}" '
         f'data-search="{esc(search)}">'
+        f'{thumb}'
         f'<div class="card-meta">{badge}<span class="card-en">{esc(item["en"])}</span></div>'
         f'<h3><a class="card-link" href="{esc(item["id"])}.html">{esc(item["name"])}</a></h3>'
         f'<p>{esc(item["tagline"])}</p>'
@@ -157,8 +174,8 @@ def build_hub():
         '<div class="path-grid">'
         '<div class="path-step"><h3>先看板块</h3><p>基础板块解释心理现象与研究方法，应用板块对应真实场景，'
         '交叉板块呈现与神经科学、计算和文化研究结合的新方向。</p></div>'
-        '<div class="path-step"><h3>再读单页</h3><p>每个分支页面用统一结构拆解：核心议题、研究方法、'
-        '应用场景、关键概念、代表人物与延伸阅读。</p></div>'
+        '<div class="path-step"><h3>再读单页</h3><p>每个分支页面用统一结构拆解：主题插画、核心议题、'
+        '经典研究、争议前沿、动手练习、方法场景与延伸阅读。</p></div>'
         '<div class="path-step"><h3>顺着关联走</h3><p>每页底部的「相邻分支」给出三条跨领域线索，'
         '适合把孤立知识点连成网络。</p></div>'
         '</div></div></section>'
@@ -202,7 +219,19 @@ def build_branch(item):
     )
     if item.get("note"):
         parts.append(f'<div class="note">{esc(item["note"])}</div>')
-    parts.append('</div>' + ART + '</div></div>')
+
+    src = image_for(cid)
+    if src:
+        hero_visual = (
+            '<figure class="hero-figure">'
+            f'<img src="{esc(src)}" alt="{esc(item["image_alt"])}" '
+            'loading="eager" decoding="async" width="1536" height="1024">'
+            f'<figcaption>{esc(item["image_caption"])}</figcaption>'
+            '</figure>'
+        )
+    else:
+        hero_visual = ART
+    parts.append('</div>' + hero_visual + '</div></div>')
 
     parts.append('<section aria-labelledby="topics-title"><div class="wrap">'
                  '<div class="section-head"><h2 id="topics-title">核心议题</h2>'
@@ -213,6 +242,36 @@ def build_branch(item):
             f'<h3>{esc(topic["title"])}</h3><p>{esc(topic["desc"])}</p></article>'
         )
     parts.append('</div></div></section>')
+
+    parts.append('<section aria-labelledby="why-title"><div class="wrap">'
+                 '<div class="section-head"><h2 id="why-title">为什么值得学</h2>'
+                 '<p>这一分支能带来什么</p></div><div class="panel why-panel">'
+                 f'<h3>{esc(item["why"]["title"])}</h3>'
+                 f'<p>{esc(item["why"]["desc"])}</p>'
+                 '</div></div></section>')
+
+    parts.append('<section aria-labelledby="case-title"><div class="wrap">'
+                 '<div class="section-head"><h2 id="case-title">经典研究</h2>'
+                 '<p>一项奠定了这个领域的研究</p></div>'
+                 '<article class="panel case-panel">'
+                 f'<h3>{esc(item["case"]["title"])}</h3>'
+                 f'<p>{esc(item["case"]["desc"])}</p>'
+                 '</article></div></section>')
+
+    parts.append('<section aria-labelledby="debate-title"><div class="wrap">'
+                 '<div class="section-head"><h2 id="debate-title">争议与前沿</h2>'
+                 '<p>还没定论的问题，往往最值得追问</p></div><div class="grid compact">')
+    for debate in item["debates"]:
+        parts.append('<article class="card"><span class="badge">前沿议题</span>'
+                     f'<h3>{esc(debate["title"])}</h3><p>{esc(debate["desc"])}</p></article>')
+    parts.append('</div></div></section>')
+
+    parts.append('<section aria-labelledby="try-title"><div class="wrap">'
+                 '<div class="section-head"><h2 id="try-title">动手试一试</h2>'
+                 '<p>把概念带回日常观察</p></div><div class="panel try-panel">'
+                 f'<h3>{esc(item["try_it"]["title"])}</h3>'
+                 f'<p>{esc(item["try_it"]["desc"])}</p>'
+                 '</div></div></section>')
 
     parts.append('<section aria-labelledby="practice-title"><div class="wrap">'
                  '<div class="section-head"><h2 id="practice-title">方法与场景</h2>'
